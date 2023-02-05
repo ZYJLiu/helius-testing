@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// TODO: test if this works
+model Transaction {
+  description     String
+  type            String
+  source          String
+  fee             Int
+  feePayer        String
+  signature       String           @id
+  slot            Int
+  timestamp       Int
+  tokenTransfers  TokenTransfer[]
+  nativeTransfers NativeTransfer[]
+
+  @@index([feePayer])
+}
+
+model TokenTransfer {
+  fromTokenAccount     String
+  toTokenAccount       String
+  fromUserAccount      String
+  toUserAccount        String
+  tokenAmount          Int
+  mint                 String
+  tokenStandard        String
+  Transaction          Transaction @relation(fields: [transactionSignature], references: [signature])
+  transactionSignature String
+
+  @@id([transactionSignature, fromUserAccount, toUserAccount])
+}
+
+model NativeTransfer {
+  from                 String
+  to                   String
+  amount               Int
+  Transaction          Transaction @relation(fields: [transactionSignature], references: [signature])
+  transactionSignature String
+
+  @@id([transactionSignature, from, to])
+}

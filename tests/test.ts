@@ -8,9 +8,10 @@ import { initializeKeypair } from "./initializeKeypair"
 import axios from "axios"
 import dotenv from "dotenv"
 dotenv.config()
+import fs from "fs"
 
 describe("Bonk", () => {
-  const connection = new Connection(process.env.HELIUS_MAINNET, "confirmed")
+  const connection = new Connection(process.env.HELIUS_MAINNET!, "confirmed")
 
   const HELIUS_KEY = process.env.HELIUS_API_KEY
   const ORIG_BONK_ACCOUNT = "9AhKqLR67hwapvG8SA2JFXaCshXc9nALJjpKaHZrsbkw"
@@ -18,15 +19,19 @@ describe("Bonk", () => {
   const parseTransactions = async () => {
     const parse_transactions_url = `https://api.helius.xyz/v0/addresses/${ORIG_BONK_ACCOUNT}/transactions`
     const params = new URLSearchParams()
-    params.append("api-key", HELIUS_KEY)
-    //   params.append(
-    //     "before",
-    //     "3457h9Dt5ddXnJHN7M9yM1qmRgvJbDGmVYjzADNXZFaEQ2HKDq6rneSZNd9y8KypNK6HH4JEW1kpKTykjmGu8Fdv"
-    //   )
-    //   params.append("type", "TRANSFER")
+    params.append("api-key", HELIUS_KEY!)
+    params.append(
+      "before",
+      "3457h9Dt5ddXnJHN7M9yM1qmRgvJbDGmVYjzADNXZFaEQ2HKDq6rneSZNd9y8KypNK6HH4JEW1kpKTykjmGu8Fdv"
+    )
+    params.append("type", "TRANSFER")
 
     const { data } = await axios.get(parse_transactions_url, { params })
-    console.log("parsed transactions: ", JSON.stringify(data, null, 2))
+    console.log(JSON.stringify(data, null, 2))
+    fs.writeFileSync(
+      "referenceParsedTransactionsTypeTransfer.json",
+      JSON.stringify(data, null, 2)
+    )
   }
 
   const parseTransaction = async () => {
@@ -37,7 +42,11 @@ describe("Bonk", () => {
         "2xsyZUcBPcAigMKeNbPgxWCN2BWsNL8Sd6cstNnxN3J46Lnk3MueCG7jCZpsYX6jqsHWUYq3fpj358jze8g7uGu5",
       ],
     })
-    console.log("parsed transactions: ", JSON.stringify(data, null, 2))
+    console.log(JSON.stringify(data, null, 2))
+    fs.writeFileSync(
+      "referenceParsedTransaction.json",
+      JSON.stringify(data, null, 2)
+    )
   }
 
   const rawTransaction = async () => {
@@ -49,13 +58,17 @@ describe("Bonk", () => {
         endSlot: 165722272,
       },
     })
-    console.log("parsed transactions: ", JSON.stringify(data, null, 2))
+    console.log(JSON.stringify(data, null, 2))
+    fs.writeFileSync(
+      "referenceRawTransaction.json",
+      JSON.stringify(data, null, 2)
+    )
   }
 
   it("Test", async () => {
     // parseTransactions()
     // parseTransaction()
-    rawTransaction()
+    // rawTransaction()
   })
 })
 
