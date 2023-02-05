@@ -1,0 +1,58 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn
+
+PATH: 
+  /home/johnliu/.vscode-server/bin/e2816fe719a4026ffa1ee0189dc89bdfdbafb164/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Eclipse Adoptium/jdk-11.0.17.8-hotspot/bin:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/nodejs/:/mnt/c/Users/johnz/AppData/Local/Android/sdk/platform-tools.:/mnt/c/Users/johnz/.cargo/bin:/mnt/c/Users/johnz/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/johnz/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/johnz/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/johnz/AppData/Roaming/npm:/snap/bin
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  16.18.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/johnliu/grizzly/helius-client/package.json: Unexpected token } in JSON at position 675
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "solana-course-client",
+    "version": "1.0.0",
+    "description": "Starter template for a Solana client script",
+    "main": "index.ts",
+    "scripts": {
+      "start": "ts-node src/index.ts",
+      "test": "yarn run ts-mocha -p ./tests/tsconfig.json -t 1000000 ./tests/test.ts"
+    },
+    "keywords": [],
+    "author": "test",
+    "license": "ISC",
+    "devDependencies": {
+      "ts-node": "^10.8.0",
+      "@types/chai": "^4.3.3",
+      "@types/mocha": "^9.1.1",
+      "chai": "^4.3.6",
+      "mocha": "^10.0.0",
+      "ts-mocha": "^10.0.0",
+      "typescript": "^4.8.3"
+    },
+    "dependencies": {
+      "@solana/spl-token": "^0.3.6",
+      "@solana/web3.js": "^1.73.0",
+      "dotenv": "^16.0.1"
+    },
+  
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
