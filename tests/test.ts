@@ -20,10 +20,10 @@ describe("Bonk", () => {
     const parse_transactions_url = `https://api.helius.xyz/v0/addresses/${ORIG_BONK_ACCOUNT}/transactions`
     const params = new URLSearchParams()
     params.append("api-key", HELIUS_KEY!)
-    params.append(
-      "before",
-      "3457h9Dt5ddXnJHN7M9yM1qmRgvJbDGmVYjzADNXZFaEQ2HKDq6rneSZNd9y8KypNK6HH4JEW1kpKTykjmGu8Fdv"
-    )
+    // params.append(
+    //   "before",
+    //   "3457h9Dt5ddXnJHN7M9yM1qmRgvJbDGmVYjzADNXZFaEQ2HKDq6rneSZNd9y8KypNK6HH4JEW1kpKTykjmGu8Fdv"
+    // )
     params.append("type", "TRANSFER")
 
     const { data } = await axios.get(parse_transactions_url, { params })

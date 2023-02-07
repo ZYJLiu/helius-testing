@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "TokenTransfer" ALTER COLUMN "tokenAmount" SET DATA TYPE DOUBLE PRECISION;

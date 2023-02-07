@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "ts-mocha -p ./tsconfig.json -t 1000000 ./tests/test.ts",
-    "prisma": "nodemon ./prisma/scripts.ts"
+    "prisma": "nodemon ./prisma/script.ts"
   },
   "keywords": [],
   "author": "test",
