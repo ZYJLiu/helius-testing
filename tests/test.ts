@@ -43,17 +43,17 @@ describe("Bonk", () => {
   const parseTransaction = async () => {
     const parse_transaction_url = `https://api.helius.xyz/v0/transactions/?api-key=${HELIUS_KEY}`
 
-    const sig = fs.readFileSync("genesisTxSig.json", "utf8")
+    const sig = fs.readFileSync("custodianTxSig.json", "utf8")
     const parsedData = JSON.parse(sig)
     const parsedArray = Array.isArray(parsedData) ? parsedData : [parsedData]
-    const first100 = parsedArray.slice(0, 100)
-    console.log(first100)
+    const last100 = parsedArray.slice(-100)
+    console.log("test", last100)
 
     const { data } = await axios.post(parse_transaction_url, {
-      transactions: first100,
+      transactions: last100,
     })
     console.log(JSON.stringify(data, null, 2))
-    fs.writeFileSync(
+    fs.appendFileSync(
       "referenceParsedTransaction.json",
       JSON.stringify(data, null, 2)
     )
@@ -62,7 +62,7 @@ describe("Bonk", () => {
   it("Test", async () => {
     // test()
     // getSignatures()
-    // parseTransaction()
+    parseTransaction()
   })
 })
 
