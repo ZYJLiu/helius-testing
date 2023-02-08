@@ -14,33 +14,43 @@ describe("Bonk", () => {
   const connection = new Connection(process.env.HELIUS_MAINNET!, "confirmed")
 
   const HELIUS_KEY = process.env.HELIUS_API_KEY
-  const ORIG_BONK_ACCOUNT = "9AhKqLR67hwapvG8SA2JFXaCshXc9nALJjpKaHZrsbkw"
 
-  const parseTransactions = async () => {
-    const parse_transactions_url = `https://api.helius.xyz/v0/addresses/${ORIG_BONK_ACCOUNT}/transactions`
-    const params = new URLSearchParams()
-    params.append("api-key", HELIUS_KEY!)
-    // params.append(
-    //   "before",
-    //   "3457h9Dt5ddXnJHN7M9yM1qmRgvJbDGmVYjzADNXZFaEQ2HKDq6rneSZNd9y8KypNK6HH4JEW1kpKTykjmGu8Fdv"
-    // )
-    params.append("type", "TRANSFER")
-
-    const { data } = await axios.get(parse_transactions_url, { params })
-    console.log(JSON.stringify(data, null, 2))
-    fs.writeFileSync(
-      "referenceParsedTransactionsTypeTransfer.json",
-      JSON.stringify(data, null, 2)
+  const test = async () => {
+    const withdrawAuth = new PublicKey(
+      "Mc5XB47H3DKJHym5RLa9mPzWv5snERsF3KNv5AauXK8"
     )
+    const sigs = await connection.getSignaturesForAddress(withdrawAuth, {
+      before:
+        "ByWGKCsUixoiZezA9xUbMTRkxFP6xa2LEs2z8npCPsBvQHfNGrA1hWYySAMYjJmbFxNXyDVftnLioya9mzruuq3",
+    })
+
+    console.log(sigs)
+
+    fs.writeFileSync("test.json", JSON.stringify(sigs, null, 2))
+  }
+
+  function getSignatures() {
+    const data = fs.readFileSync("genesisCustodianTxSig.json", "utf8")
+    const parsedData = JSON.parse(data)
+    const signatures: any = []
+    parsedData.forEach((item: any) => {
+      signatures.push(item.signature)
+    })
+    console.log(signatures)
+    fs.writeFileSync("test.json", JSON.stringify(signatures, null, 2))
   }
 
   const parseTransaction = async () => {
     const parse_transaction_url = `https://api.helius.xyz/v0/transactions/?api-key=${HELIUS_KEY}`
 
+    const sig = fs.readFileSync("genesisTxSig.json", "utf8")
+    const parsedData = JSON.parse(sig)
+    const parsedArray = Array.isArray(parsedData) ? parsedData : [parsedData]
+    const first100 = parsedArray.slice(0, 100)
+    console.log(first100)
+
     const { data } = await axios.post(parse_transaction_url, {
-      transactions: [
-        "2xsyZUcBPcAigMKeNbPgxWCN2BWsNL8Sd6cstNnxN3J46Lnk3MueCG7jCZpsYX6jqsHWUYq3fpj358jze8g7uGu5",
-      ],
+      transactions: first100,
     })
     console.log(JSON.stringify(data, null, 2))
     fs.writeFileSync(
@@ -49,26 +59,10 @@ describe("Bonk", () => {
     )
   }
 
-  const rawTransaction = async () => {
-    const raw_transaction_url = `https://api.helius.xyz/v1/raw-transactions?api-key=${HELIUS_KEY}`
-    const { data } = await axios.post(raw_transaction_url, {
-      query: {
-        accounts: [ORIG_BONK_ACCOUNT],
-        startSlot: 165720272,
-        endSlot: 165722272,
-      },
-    })
-    console.log(JSON.stringify(data, null, 2))
-    fs.writeFileSync(
-      "referenceRawTransaction.json",
-      JSON.stringify(data, null, 2)
-    )
-  }
-
   it("Test", async () => {
-    // parseTransactions()
+    // test()
+    // getSignatures()
     // parseTransaction()
-    // rawTransaction()
   })
 })
 
